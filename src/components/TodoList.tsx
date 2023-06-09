@@ -6,10 +6,11 @@ export const TodoList: React.FC = () => {
 
     const { todos, page, loading, error, limit } = useTypedSelector(state => state.todo)
     const { fetchTodo, SetTodoPageAction } = useActions()
+    const pages = [1, 2, 3, 4, 5]
 
     useEffect(() => {
         fetchTodo(page, limit)
-    }, [])
+    }, [page])
 
 
     if (loading) {
@@ -23,6 +24,15 @@ export const TodoList: React.FC = () => {
             {todos.map(todo => <div key={todo.id}>
                 {todo.id} - {todo.title}
             </div>)}
+            <div style={{ display: 'flex' }}>
+                {pages.map(p => <div
+                    onClick={() => { SetTodoPageAction(p) }}
+                    style={{ border: p === page ? '2px solid green' : '1px solid gray', padding: '10px' }}
+                    key={p}
+                >
+                    {p}
+                </div>)}
+            </div>
         </div>
     )
 }
